@@ -1,46 +1,175 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AppContext } from "../Context/AppContext";
 
 function Login() {
-      return (
-            <>
-                  <form className='w-3/4 m-auto mt-[5rem]'>
-                        <div class="grid gap-6 mb-6 md:grid-cols-2">
-                              <div>
-                                    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
-                                    <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Meet"  />
-                              </div>
-                              <div>
-                                    <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
-                                    <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Aghara"  />
-                              </div>
-                              <div>
-                                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone number</label>
-                                    <input type="tel" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="01234-56789"   />
-                              </div>
+  const [loginEmail, setLoginEmail] = useState();
+  const [loginPassword, setLoginPassword] = useState();
+
+  const {setFlagLogin,setFlagSignUp,setFirstName,setLastName,setNumber,setEmail}=useContext(AppContext);
+  const navigate = useNavigate();
+  const handledata = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+
+      // console.log(result.user.firstname);
+      if (response.ok) {
+        navigate("/");
+        setFlagLogin(false);
+        setFirstName(result.user.firstname);
+        setLastName(result.user.lastname);
+        setEmail(result.user.email);
+        setNumber(result.user.number);
+        setFlagSignUp(false);
+      } else {
+        alert(result.message || "Login failed. Please check your credentials.");
+      }
+    } catch (error) {
+      alert("An error occurred. Please try again later.");
+    }
+  };
+  return (
+    <>
+      <div id="signup-form">
+        <section className="bg-gray-50 dark:bg-gray-900">
+          <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
+            <div className="flex flex-col justify-center">
+              <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                Join Us and Discover the World
+              </h1>
+              <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+                Sign up now to start your journey with Flowbite and explore our
+                wide range of rental cars.
+              </p>
+              <NavLink
+                to="/signup"
+                className="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center"
+              >
+                Sign Up Now
+                <svg
+                  className="w-3.5 h-3.5 ms-2 rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9"
+                  />
+                </svg>
+              </NavLink>
+            </div>
+            <div>
+              <div className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  Sign up for Flowbite
+                </h2>
+                <form className="mt-8 space-y-6" action="#">
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Your email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="name@company.com"
+                      required
+                      value={loginEmail}
+                      onChange={(e) => {
+                        setLoginEmail(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="password"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Your password
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="••••••••"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required
+                      value={loginPassword}
+                      onChange={(e) => {
+                        setLoginPassword(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className="items-start">
+                    <div className="grid-class">
+                      <div className="flex remember-password text-sm">
+                        <div className="checkbox-container flex items-center h-5 mr-3">
+                          <input
+                            id="remember"
+                            aria-describedby="remember"
+                            name="remember"
+                            type="checkbox"
+                            className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                            required
+                          />
                         </div>
-                        <div class="mb-6">
-                              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
-                              <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="meet.5@company.com"  />
-                        </div>
-                        <div class="mb-6">
-                              <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                              <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••"  />
-                        </div>
-                        <div class="mb-6">
-                              <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                              <input type="password" id="confirm_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••"  />
-                        </div>
-                        <div class="flex items-start mb-6">
-                              <div class="flex items-center h-5">
-                                    <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"  />
-                              </div>
-                              <label for="remember" class="ms-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="/" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
-                        </div>
-                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-[2rem]"><NavLink to='/Home'>Submit</NavLink></button>
-                  </form>
-            </>
-      );
+                        <label
+                          htmlFor="remember"
+                          className="font-medium text-gray-500 dark:text-gray-400"
+                        >
+                          Remember this device
+                        </label>
+                      </div>
+                      <NavLink
+                        to="/forgot-password"
+                        className="forgot-password ms-auto text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                      >
+                        Forgot Password?
+                      </NavLink>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    onClick={handledata}
+                  >
+                    Login
+                  </button>
+                  {/* <div className="text-sm font-medium text-gray-900 dark:text-white">
+                    Already have an account?{" "}
+                    <NavLink
+                      to="/login"
+                      className="text-blue-600 hover:underline dark:text-blue-500"
+                    >
+                      Log in here
+                    </NavLink>
+                  </div> */}
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
+  );
 }
 
 export default Login;
