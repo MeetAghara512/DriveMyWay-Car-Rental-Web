@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const SellCarSchema = new mongoose.Schema({
+const RentedCarSchema = new mongoose.Schema({
   firstname: String,
   lastname: String,
   email: String,
@@ -12,9 +12,9 @@ const SellCarSchema = new mongoose.Schema({
   Gear: String,
   Price: String,
   img: String,
-},
-  { collection: "img_details" }
-);
+  buyerEmail: String, // <-- Extra field
+}, { collection: "Rented_car" });
 
-const SellCar = mongoose.model("img_details", SellCarSchema);
-export default SellCar;
+const RentedCar = mongoose.model("Rented_car", RentedCarSchema);
+
+export default RentedCar;

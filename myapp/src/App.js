@@ -1,24 +1,21 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
-import GetCar from "./components/Getcar";
+import GetCar from "./components/GetCar";
 import { Routes, Route } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { alldata } from "./components/Assets/RentCarData";
 import RentCarCards from "./components/RentCarCards";
-import SellCar from "./components/SellCar";
 import AccountProfile from "./components/AccountProfile";
-import "./components/Popup.css";
+import SellCarUserInput from "./components/SellCarUserInput";
 import Logout from "./components/Logout";
-// import Tempp from './components/Tempp';
+import About from "./components/About";
 
 function App() {
   return (
-    <div className="App w-[100vw] bg-gray-200">
+    <div className="App min-h-screen w-screen bg-gray-200 flex flex-col">
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Home />}></Route>
@@ -26,16 +23,16 @@ function App() {
         <Route path="/Login" element={<Login />}></Route>
         <Route path="/Signup" element={<Signup />}></Route>
         <Route path="/Getcar" element={<GetCar />}></Route>
-        <Route path="/SellCar" element={<SellCar />}></Route>
+        <Route path="/sellcar" element={<SellCarUserInput />}></Route>
         <Route path="/Logout" element={<Logout />}></Route>
-       
+        <Route path="/About" element={<About />}></Route>
         <Route
           path="/RentCarCards"
-          element={<RentCarCards alldata={alldata} />}
+          element={<RentCarCards/>}
         ></Route>
         <Route
           path="/AccountProfile"
-          element={<AccountProfile alldata={alldata} />}
+          element={<AccountProfile  />}
         ></Route>
       </Routes>
       <ToastContainer></ToastContainer>

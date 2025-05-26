@@ -8,19 +8,20 @@ function AppContextProvider({ children }) {
       const [number, setNumber] = useState("");
       const [email, setEmail] = useState("");
       const [password, setPassword] = useState("");
-      const [flagSignUp,setFlagSignUp]=useState(true);
+      const [flagSignUp, setFlagSignUp] = useState(true);
 
-      const [flagLogin,setFlagLogin]=useState(true);
+      const [flagLogin, setFlagLogin] = useState(true);
 
       const resetState = () => {
-            setFirstName();
-            setLastName();
-            setEmail();
-            setNumber();
-            setPassword();
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setNumber("");
+            setPassword("");
             setFlagSignUp(true);
             setFlagLogin(true);
       };
+
 
       const value = {
             firstname,

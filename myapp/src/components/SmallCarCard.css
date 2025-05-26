@@ -19,3 +19,146 @@
       margin-bottom: 1rem;
       background-color: rgb(234, 234, 193);
 }
+.card-container {
+	width: 60%;
+	margin: auto;
+}
+
+.card-info span {
+	margin: 5px;
+}
+
+.submit-btn {
+	width: 100px;
+	height: 35px;
+	border: 2px solid black;
+	border-radius: 0.5rem;
+	background-color: #bfdbfe; /* blue-200 */
+}
+
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 50;
+}
+
+.modal {
+	background: white;
+	padding: 24px;
+	border-radius: 12px;
+	box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+	width: 400px;
+}
+
+.car-img {
+	width: 64px;
+	height: 64px;
+	margin-right: 16px;
+}
+
+.description-input {
+	width: 50%;
+	padding: 0.5rem;
+	margin-left: 1rem;
+	border: 1px solid #d1d5db;
+	border-radius: 0.5rem;
+}
+
+.action-btn {
+	color: white;
+	font-weight: bold;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+}
+/* Container for each car card */
+.card-container {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Car details row */
+.card-info {
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Submit button */
+.submit-btn {
+  padding: 6px 12px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #2563eb;
+}
+
+/* Modal background overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Modal content */
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Car image in modal */
+.car-img {
+  width: 100px;
+  height: auto;
+  border-radius: 4px;
+  margin-right: 12px;
+}
+
+/* Rating stars */
+.stars {
+  display: flex;
+  gap: 6px;
+  margin-right: 12px;
+}
+
+/* Damage description input */
+.description-input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Buttons inside popup */
+.action-btn {
+  padding: 6px 12px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+}

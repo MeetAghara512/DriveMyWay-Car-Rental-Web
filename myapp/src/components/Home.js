@@ -1,30 +1,48 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import './Home.css';
 
 function Home() {
-    return (
-        <>
-            <div className='OuterBox flex gap-5 justify-center '>
-                <NavLink to='/Getcar'>
-                    <div className='GetCar w-[15rem] h-[15rem] rounded-[1rem] transition ease-in-out delay-100 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300'>
-                        <div className='text-content test-center pt-[4rem]'>
-                            <p className='text-[2rem] italic text-white'>Purchase</p>
-                            <p className='text-[2rem] italic text-white'>Car</p>
-                        </div>
-                    </div>
-                </NavLink>
-                <NavLink to='/SellCar'>
-                    <div className='SellCar w-[15rem] h-[15rem] rounded-[1rem] transition ease-in-out delay-100 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300'>
-                    <div className='text-content test-center pt-[4rem]'>
-                            <p className='text-[2rem] italic text-white'>Sell</p>
-                            <p className='text-[2rem] italic text-white'>Car</p>
-                        </div>
-                    </div>
-                </NavLink>
-            </div>
-        </>
-    );
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center  px-6 py-20">
+      <h1 className="text-gray-800 text-5xl font-extrabold mb-12 select-none">
+        Your Trusted Car Marketplace
+      </h1>
+
+      <div className="flex flex-wrap justify-center gap-12 max-w-6xl">
+        <NavLink to="/Getcar" className="group perspective">
+          <div className="relative w-72 h-80 rounded-3xl bg-gradient-to-tr from-blue-500 to-indigo-700 shadow-lg
+                          transform transition-transform duration-500 ease-in-out
+                          hover:rotate-y-12 hover:scale-105 cursor-pointer flex flex-col items-center justify-center text-center p-8">
+            <p className="text-4xl font-extrabold text-white italic tracking-wide drop-shadow-md select-none">
+              Purchase
+            </p>
+            <p className="text-4xl font-extrabold text-white italic tracking-wide drop-shadow-md select-none mb-6">
+              Your Dream Car
+            </p>
+            <p className="text-lg text-indigo-200 max-w-xs leading-relaxed select-none">
+              Explore over <span className="font-semibold text-white">10,000+</span> cars from trusted sellers nationwide.
+            </p>
+          </div>
+        </NavLink>
+
+        <NavLink to="/SellCar" className="group perspective">
+          <div className="relative w-72 h-80 rounded-3xl bg-gradient-to-tr from-purple-600 to-pink-700 shadow-lg
+                          transform transition-transform duration-500 ease-in-out
+                          hover:-rotate-y-12 hover:scale-105 cursor-pointer flex flex-col items-center justify-center text-center p-8">
+            <p className="text-4xl font-extrabold text-white italic tracking-wide drop-shadow-md select-none">
+              Sell
+            </p>
+            <p className="text-4xl font-extrabold text-white italic tracking-wide drop-shadow-md select-none mb-6">
+              Your Car Fast
+            </p>
+            <p className="text-lg text-pink-200 max-w-xs leading-relaxed select-none">
+              Join over <span className="font-semibold text-white">5,000+</span> happy sellers who sold their cars in under 7 days.
+            </p>
+          </div>
+        </NavLink>
+      </div>
+    </div>
+  );
 }
 
 export default Home;

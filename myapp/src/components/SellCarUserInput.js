@@ -1,232 +1,256 @@
 import React, { useState } from "react";
-// import { NavLink } from "react-router-dom";
 import axios from "axios";
 
-const url = "";
-
-function SellCarUserInput(props) {
-  const [postData, setPostData] = useState({
-    fn: "",
-    ln: "",
-    mail: "",
-    phone: "",
-    carBrand: "",
-    carModel: "",
-    carFuel: "",
-    carPlate: "",
-    carPrice: "",
-    carGear: "",
-    img: "",
+function SellCarUserInput() {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const [form, setForm] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    number: "",
+    brand: "",
+    model: "",
+    numberPlate: "",
+    Fuel: "",
+    Gear: "",
+    Price: ""
   });
+  const [loading, setLoading] = useState(false);
 
-  const createPost = async (newImage) => {
+  async function handleImageChange(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setSelectedImage(file);
+    setLoading(true);
+
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "car_img"); // your Cloudinary upload preset
+
     try {
-      await axios.post(url, newImage);
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/<cloud name>/<resource_type>/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const uploadData = await res.json();
+      if (uploadData.secure_url) {
+        setImageUrl(uploadData.secure_url);
+      } else {
+        alert("Image upload failed. Please try again.");
+        setImageUrl("");
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Image upload failed:", error);
+      alert("Image upload failed. Check console for details.");
+      setImageUrl("");
+    } finally {
+      setLoading(false);
     }
-  };
+  }
 
-  const handlesubmit = async (e) => {
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log("data:", postData);
-    let result = await fetch("http://localhost:5000/uploads", {
-      method: "POST",
-      body: JSON.stringify(postData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    result = await result.json();
+    console.log("Form data:", form);
+    console.log("Image URL:", imageUrl);
+    if (!imageUrl) {
+      alert("Please upload an image first.");
+      return;
+    }
 
-    console.log(result);
-  };
+    const dataToSend = { ...form, img: imageUrl };
+    try {
+      setLoading(true);
+      const res = await axios.post("http://localhost:5000/uploads", dataToSend);
+      console.log("Response status:", res.status);
+      console.log("Response data:", res.data);
+
+      if (res.status === 200) {
+        alert("Car data submitted successfully!");
+        // Reset form and image
+        setForm({
+          firstname: "",
+          lastname: "",
+          email: "",
+          number: "",
+          brand: "",
+          model: "",
+          numberPlate: "",
+          Fuel: "",
+          Gear: "",
+          Price: ""
+        });
+        setSelectedImage(null);
+        setImageUrl("");
+      } else {
+        alert("Failed to submit data. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error submitting data", err);
+      alert("Error submitting data. See console for details.");
+    } finally {
+      setLoading(false); // Ensure loading is reset even on error
+    }
+  }
 
   return (
-    <>
-      <form className="w-[50rem] m-auto" onSubmit={handlesubmit}>
-        <div className="grid gap-6 mb-6 md:grid-cols-2">
-          <div>
-            <label
-              htmlFor="first_name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              First name
-            </label>
-            <input
-              type="text"
-              id="first_name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Meet"
-              onChange={(e) => {
-                setPostData({
-                  ...postData,
-                  fn: e.target.value,
-                  img: props.postImage,
-                });
-              }}
-              value={postData.fn}
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="last_name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Last name
-            </label>
-            <input
-              type="text"
-              id="last_name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Aghara"
-              onChange={(e) => setPostData({ ...postData, ln: e.target.value })}
-              value={postData.ln}
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="phone"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Phone number
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="01234-56789"
-              onChange={(e) =>
-                setPostData({ ...postData, phone: e.target.value })
-              }
-              value={postData.phone}
-            />
-          </div>
-        </div>
-        <div className="mb-6">
-          <label
-            htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Email address
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="meet.5@company.com"
-            onChange={(e) => setPostData({ ...postData, mail: e.target.value })}
-            value={postData.mail}
-          />
-        </div>
-        <div className="grid gap-6 mb-3 md:grid-cols-3">
-          <div>
-            <label
-              htmlFor="carBrand"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Car Brand
-            </label>
-            <input
-              type="text"
-              id="carBrand"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Toyota"
-              onChange={(e) =>
-                setPostData({ ...postData, carBrand: e.target.value })
-              }
-              value={postData.carBrand}
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="carModel"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Car Model
-            </label>
-            <input
-              type="text"
-              id="carModel"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Camry"
-              onChange={(e) =>
-                setPostData({ ...postData, carModel: e.target.value })
-              }
-              value={postData.carModel}
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="carPlate"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Car Number Plate
-            </label>
-            <input
-              type="text"
-              id="carPlate"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="XX-00-X-0000"
-              onChange={(e) =>
-                setPostData({ ...postData, carPlate: e.target.value })
-              }
-              value={postData.carPlate}
-            />
-          </div>
-        </div>
-        <div className="relative h-10 w-72 min-w-[200px] mt-[35px] mb-[25px]">
-          <select
-            className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-            onChange={(e) =>
-              setPostData({ ...postData, carFuel: e.target.value })
-            }
-            value={postData.carFuel}
-          >
-            <option value="Petrol">Petrol</option>
-            <option value="CNG">CNG</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Electric">Electric</option>
-          </select>
-          <label className="peer-placeholder-shown:text-sm peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900">
-            Select Car Fuel
-          </label>
-        </div>
-        <div className="relative h-10 w-72 min-w-[200px] mt-[35px] mb-[25px]">
-          <select
-            className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-            onChange={(e) =>
-              setPostData({ ...postData, carGear: e.target.value })
-            }
-            value={postData.carGear}
-          >
-            <option value="Automatic">Automatic</option>
-            <option value="Manual">Manual</option>
-          </select>
-          <label className="peer-placeholder-shown:text-sm peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900">
-            Select Car Gear
-          </label>
-        </div>
-        <div className="relative h-10 w-72 min-w-[200px] mt-[35px] mb-[25px]">
-          <input
-            type="number"
-            placeholder="Price"
-            onChange={(e) =>
-              setPostData({ ...postData, carPrice: e.target.value })
-            }
-            value={postData.carPrice}
-            className="w-full rounded-md border-2 p-2"
-          />
-        </div>
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-16 px-4 sm:px-6 lg:px-8">
+      {/* Outer container for the form, matching Signup's central box */}
+      <div className="max-w-lg w-full mx-auto bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 sm:p-10 lg:p-12">
+        <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">List Your Car for Sale</h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
 
-        <button
-          type="submit"
-          className="block rounded-md bg-[#1e40af] py-2 px-4 text-white"
-        >
-          Submit
-        </button>
-      </form>
-    </>
+          {/* First Name & Last Name (Responsive Grid) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              name="firstname"
+              value={form.firstname}
+              placeholder="First Name"
+              onChange={handleChange}
+              required
+              className="px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              name="lastname"
+              value={form.lastname}
+              placeholder="Last Name"
+              onChange={handleChange}
+              required
+              className="px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Email */}
+          <input
+            name="email"
+            value={form.email}
+            type="email"
+            placeholder="Email"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          {/* Phone Number */}
+          <input
+            name="number"
+            value={form.number}
+            type="tel"
+            placeholder="Phone Number"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          {/* Car Brand & Model (Responsive Grid) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              name="brand"
+              value={form.brand}
+              placeholder="Car Brand (e.g., Toyota)"
+              onChange={handleChange}
+              required
+              className="px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              name="model"
+              value={form.model}
+              placeholder="Car Model (e.g., Camry)"
+              onChange={handleChange}
+              required
+              className="px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Number Plate */}
+          <input
+            name="numberPlate"
+            value={form.numberPlate}
+            placeholder="Number Plate (e.g., ABC-123)"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          {/* Fuel & Gear Type (Responsive Grid) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              name="Fuel"
+              value={form.Fuel}
+              placeholder="Fuel Type (e.g., Petrol, Diesel)"
+              onChange={handleChange}
+              required
+              className="px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              name="Gear"
+              value={form.Gear}
+              placeholder="Gear Type (e.g., Manual, Automatic)"
+              onChange={handleChange}
+              required
+              className="px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Price */}
+          <input
+            name="Price"
+            value={form.Price}
+            type="number"
+            placeholder="Asking Price (e.g., 15000)"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          {/* Image Upload Button */}
+          <label className="cursor-pointer inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl shadow-md transition duration-300">
+            {loading && selectedImage ? "Uploading..." : "Choose Car Image"}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+              disabled={loading}
+            />
+          </label>
+
+          {/* Image Upload Status & Preview */}
+          {selectedImage && (
+            <p className="mt-2 text-gray-600 text-sm text-center">Selected: {selectedImage.name}</p>
+          )}
+
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              alt="Car Preview"
+              className="mt-4 w-full max-w-xs h-48 object-cover rounded-xl shadow-lg mx-auto"
+            />
+          )}
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading || !imageUrl}
+            className={`w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-xl ${
+              loading || !imageUrl
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
+          >
+            Submit Car Details
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 

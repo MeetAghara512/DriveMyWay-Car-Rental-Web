@@ -1,15 +1,26 @@
-import React, { useContext, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
 
 function Login() {
-  const [loginEmail, setLoginEmail] = useState();
-  const [loginPassword, setLoginPassword] = useState();
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const {setFlagLogin,setFlagSignUp,setFirstName,setLastName,setNumber,setEmail}=useContext(AppContext);
+  const {
+    setFlagLogin,
+    setFlagSignUp,
+    setFirstName,
+    setLastName,
+    setNumber,
+    setEmail,
+  } = useContext(AppContext);
+
   const navigate = useNavigate();
-  const handledata = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
@@ -18,157 +29,78 @@ function Login() {
           "Content-Type": "application/json",
         },
       });
-      const result = await response.json();
-      console.log(result);
 
-      // console.log(result.user.firstname);
+      const result = await response.json();
+
       if (response.ok) {
-        navigate("/");
-        setFlagLogin(false);
         setFirstName(result.user.firstname);
         setLastName(result.user.lastname);
         setEmail(result.user.email);
         setNumber(result.user.number);
+        setFlagLogin(false);
         setFlagSignUp(false);
+        navigate("/");
       } else {
-        alert(result.message || "Login failed. Please check your credentials.");
+        setErrorMsg(result.message || "Invalid credentials.");
       }
     } catch (error) {
-      alert("An error occurred. Please try again later.");
+      setErrorMsg("Error connecting to server.");
     }
   };
+
   return (
-    <>
-      <div id="signup-form">
-        <section className="bg-gray-50 dark:bg-gray-900">
-          <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
-            <div className="flex flex-col justify-center">
-              <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                Join Us and Discover the World
-              </h1>
-              <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-                Sign up now to start your journey with Flowbite and explore our
-                wide range of rental cars.
-              </p>
-              <NavLink
-                to="/signup"
-                className="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center"
-              >
-                Sign Up Now
-                <svg
-                  className="w-3.5 h-3.5 ms-2 rtl:rotate-180"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                  />
-                </svg>
-              </NavLink>
-            </div>
-            <div>
-              <div className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  Sign up for Flowbite
-                </h2>
-                <form className="mt-8 space-y-6" action="#">
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Your email
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="name@company.com"
-                      required
-                      value={loginEmail}
-                      onChange={(e) => {
-                        setLoginEmail(e.target.value);
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="password"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Your password
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="••••••••"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required
-                      value={loginPassword}
-                      onChange={(e) => {
-                        setLoginPassword(e.target.value);
-                      }}
-                    />
-                  </div>
-                  <div className="items-start">
-                    <div className="grid-class">
-                      <div className="flex remember-password text-sm">
-                        <div className="checkbox-container flex items-center h-5 mr-3">
-                          <input
-                            id="remember"
-                            aria-describedby="remember"
-                            name="remember"
-                            type="checkbox"
-                            className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
-                            required
-                          />
-                        </div>
-                        <label
-                          htmlFor="remember"
-                          className="font-medium text-gray-500 dark:text-gray-400"
-                        >
-                          Remember this device
-                        </label>
-                      </div>
-                      <NavLink
-                        to="/forgot-password"
-                        className="forgot-password ms-auto text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
-                      >
-                        Forgot Password?
-                      </NavLink>
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    onClick={handledata}
-                  >
-                    Login
-                  </button>
-                  {/* <div className="text-sm font-medium text-gray-900 dark:text-white">
-                    Already have an account?{" "}
-                    <NavLink
-                      to="/login"
-                      className="text-blue-600 hover:underline dark:text-blue-500"
-                    >
-                      Log in here
-                    </NavLink>
-                  </div> */}
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </>
+    <div className="max-w-lg w-full mx-auto mt-20 px-10 py-12 bg-white rounded-3xl shadow-2xl border border-gray-100">
+      <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Login to Your Account</h2>
+
+      {errorMsg && (
+        <p className="text-red-500 text-center mb-4 font-semibold">{errorMsg}</p>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label htmlFor="email" className="block text-sm font-semibold text-gray-800 mb-2">
+            Email Address
+          </label>
+          <input
+            type="email"
+            id="email"
+            required
+            value={loginEmail}
+            onChange={(e) => setLoginEmail(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="password" className="block text-sm font-semibold text-gray-800 mb-2">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            required
+            value={loginPassword}
+            onChange={(e) => setLoginPassword(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-xl"
+        >
+          Login
+        </button>
+      </form>
+
+      <p className="text-center text-sm text-gray-600 mt-6">
+        Don’t have an account?{" "}
+        <NavLink to="/signup" className="text-blue-600 font-semibold hover:underline">
+          Sign Up
+        </NavLink>
+      </p>
+    </div>
+
   );
 }
 

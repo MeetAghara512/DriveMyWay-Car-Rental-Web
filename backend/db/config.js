@@ -1,2 +1,7 @@
-import mongoose  from "mongoose";
-mongoose.connect("mongodb+srv://ronitpatel505:9wlCWtBVaEzVk3VE@test.eq618.mongodb.net/car-rental");
+import mongoose from 'mongoose';
+
+const mongoURI = "MONGODB_URI_HERE"; 
+
+mongoose.connect(mongoURI)
+  .then(() => console.log("Connected to MongoDB Atlas"))
+  .catch(err => console.error("MongoDB connection error:", err));
