@@ -87,18 +87,16 @@ function RentCarCards() {
 
             {openPopupCarId === car._id && (
               <>
-                {/* Overlay */}
                 <div
                   className="fixed inset-0 bg-black bg-opacity-50 z-40"
                   onClick={() => setOpenPopupCarId(null)}
                 />
-                {/* Popup modal */}
                 <div
                   role="dialog"
                   aria-modal="true"
                   aria-labelledby="popup-title"
                   className="fixed inset-0 z-50 flex items-center justify-center p-4"
-                  onClick={(e) => e.stopPropagation()} // Prevent popup click bubbling
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <div className="bg-white rounded-lg shadow-lg max-w-md w-full overflow-hidden relative">
                     <img
@@ -113,7 +111,11 @@ function RentCarCards() {
                       >
                         {car.brand} {car.model}
                       </h2>
-                      <p className="text-gray-700 mt-2">ID: {car._id}</p>
+                      <p className="text-gray-700 mt-2">Number Plate: {car.numberPlate}</p>
+                      <p className="text-gray-700 mt-1">Fuel: {car.Fuel}</p>
+                      <p className="text-gray-700 mt-1">Gear: {car.Gear}</p>
+                      <p className="text-gray-700 mt-1">Seller: {car.firstname} {car.lastname}</p>
+                      <p className="text-gray-700 mt-1">Contact: {car.number}</p>
                       <p className="text-indigo-600 font-bold mt-2">
                         ₹ {car.Price} /hr
                       </p>
