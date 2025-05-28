@@ -56,28 +56,57 @@ Admins can view platform statistics like bookings,  and user activity.
 
 ## 📸 Snapshots – DriveMyWay in Action!
 
-📌 **Register Page**  
-📌 **Login Page**  
-📌 **Home Page **
-📌 **Car Listings**  
-📌 **Booking Page**  
-📌 **Booking Confirmation Email to Renter**  
-📌 **Booking Notification on Owner Dashboard**  
-📌 **Admin Dashboard**
+### 🏠 Home Page
+![Home Page](./Picture/home.png)
+
+### 🔐 Login Page
+![Login Page](./Picture/login.png)
+
+### 📝 Register Page
+![Register Page](./Picture/register.png)
+
+### ℹ️ About Page
+![About Page](./Picture/about.png)
+
+### 👤 Account - DashBoard
+![Renter Account](./Picture/account1.png)
+
+![Renter Account](./Picture/account2.png)
+
+### 🔍 Filter Cars Page
+![Filter Cars](./Picture/filter.png)
+
+### 📋 Car Listings
+![Car Listings](./Picture/list.png)
+
+### 📝 Rent a Car Form
+![Rent Form](./Picture/renting_form.png)
+
+### 📝 Mail 
+![Conformation Mail](./Picture/maill.png)
+
 
 ---
 ## 🚀 Getting Started – How to Run DriveMyWay Locally
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/yourusername/DriveMyWay.git
+git clone https://github.com/MeetAghara512/DriveMyWay-Car-Rental-Web.git
 cd DriveMyWay
 ```
-2. **Install backend dependencies:**
-```
+2. **Install & Start backend dependencies:**
+```bash
 cd backend
 npm install
+nodemon index.js
 ```
+3. **Install & Start frontend dependencies:**
+```bash
+cd ../frontend
+npm install
+npm run start
+```
+4. **Mongo Connect & cloudinary Database Connect**
 ---
 
 ## 🚀 Future Enhancements – Coming Soon
