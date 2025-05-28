@@ -13,9 +13,10 @@ import SellCarUserInput from "./components/SellCarUserInput";
 import Logout from "./components/Logout";
 import About from "./components/About";
 
+
 function App() {
   return (
-    <div className="App min-h-screen w-screen bg-gray-200 flex flex-col">
+    <div className="App min-h-screen w-screen bg-cover bg-center bg-no-repeat overflow-x-hidden" >
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Home />}></Route>
@@ -35,7 +36,9 @@ function App() {
           element={<AccountProfile  />}
         ></Route>
       </Routes>
-      <ToastContainer></ToastContainer>
+      <ToastContainer   position="top-right"
+        style={{ top: "5rem", zIndex: 9999 }}
+        className="mt-20" ></ToastContainer>
     </div>
   );
 }

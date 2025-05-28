@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+const cloudName = import.meta.env.VITE_CLOUD_NAME;
+const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
+
+const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
 function SellCarUserInput() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -27,11 +31,10 @@ function SellCarUserInput() {
 
     const data = new FormData();
     data.append("file", file);
-    data.append("upload_preset", "car_img"); // your Cloudinary upload preset
+    data.append("upload_preset",uploadPreset); // your Cloudinary upload preset
 
     try {
-      const res = await fetch(
-        "https://api.cloudinary.com/v1_1/<cloud name>/<resource_type>/upload",
+      const res = await fetch(url,
         {
           method: "POST",
           body: data,
@@ -102,9 +105,9 @@ function SellCarUserInput() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col items-center justify-start min-h-screen  py-16 px-4 sm:px-6 lg:px-8">
       {/* Outer container for the form, matching Signup's central box */}
-      <div className="max-w-lg w-full mx-auto bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 sm:p-10 lg:p-12">
+      <div className="max-w-lg w-full mx-auto bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 sm:p-10 lg:p-12 bg-opacity-80">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">List Your Car for Sale</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
 

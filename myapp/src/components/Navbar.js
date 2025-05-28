@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
 import { AppContext } from "../Context/AppContext";
+import { FaUserCircle } from 'react-icons/fa';
+
 
 class Navbar extends Component {
-  static contextType = AppContext; 
+  static contextType = AppContext;
 
   state = {
     clicked: false,
@@ -83,10 +85,11 @@ class Navbar extends Component {
               {!flagSignUp && (
                 <li>
                   <NavLink to='/AccountProfile' className={({ isActive }) => (isActive ? 'active' : '')}>
-                    {firstname}
+                    <FaUserCircle className="inline mr-1 mb-1" /> {firstname}
                   </NavLink>
                 </li>
               )}
+
             </ul>
           </div>
 

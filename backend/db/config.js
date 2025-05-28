@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const mongoURI = "MONGODB_URI_HERE"; 
+const mongoURI = "";
 
 mongoose.connect(mongoURI)
   .then(() => console.log("Connected to MongoDB Atlas"))

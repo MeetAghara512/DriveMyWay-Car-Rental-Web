@@ -9,6 +9,7 @@ function AppContextProvider({ children }) {
       const [email, setEmail] = useState("");
       const [password, setPassword] = useState("");
       const [flagSignUp, setFlagSignUp] = useState(true);
+      const [token, setToken] = useState("");
 
       const [flagLogin, setFlagLogin] = useState(true);
 
@@ -20,6 +21,7 @@ function AppContextProvider({ children }) {
             setPassword("");
             setFlagSignUp(true);
             setFlagLogin(true);
+            setToken("");
       };
 
 
@@ -38,6 +40,8 @@ function AppContextProvider({ children }) {
             setFlagSignUp,
             flagLogin,
             setFlagLogin,
+            token,         
+            setToken, 
             resetState
       };
 

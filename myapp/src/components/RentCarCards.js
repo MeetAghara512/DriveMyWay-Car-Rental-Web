@@ -63,7 +63,7 @@ function RentCarCards() {
     );
 
   return (
-    <div className="max-w-6xl mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 bg-white rounded-xl bg-opacity-10 m-auto mt-3  w-[90%]">
       {cars.length > 0 ? (
         cars.map((car) => (
           <div
@@ -88,7 +88,7 @@ function RentCarCards() {
             {openPopupCarId === car._id && (
               <>
                 <div
-                  className="fixed inset-0 bg-black bg-opacity-50 z-40"
+                  className="fixed inset-0 bg-black bg-opacity-60 z-40"
                   onClick={() => setOpenPopupCarId(null)}
                 />
                 <div
@@ -98,44 +98,69 @@ function RentCarCards() {
                   className="fixed inset-0 z-50 flex items-center justify-center p-4"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="bg-white rounded-lg shadow-lg max-w-md w-full overflow-hidden relative">
+                  <div className="bg-white rounded-xl shadow-2xl max-w-sm overflow-hidden relative border border-gray-100 mt-20 "
+                    style={{
+                      boxShadow: '  0 4px 15px rgba(100, 100, 100, 0.2)'
+                    }}
+                  >
                     <img
                       src={car.img}
                       alt={`${car.brand} ${car.model}`}
-                      className="w-full h-64 object-cover"
+                      className="w-full h-52 object-cover rounded-t-xl"
                     />
-                    <div className="p-6">
+                    <div className="p-4">
                       <h2
                         id="popup-title"
-                        className="text-2xl font-semibold text-gray-900"
+                        className="text-2xl font-extrabold text-gray-900 tracking-tight border-b border-gray-200 pb-2 mb-3"
                       >
                         {car.brand} {car.model}
                       </h2>
-                      <p className="text-gray-700 mt-2">Number Plate: {car.numberPlate}</p>
-                      <p className="text-gray-700 mt-1">Fuel: {car.Fuel}</p>
-                      <p className="text-gray-700 mt-1">Gear: {car.Gear}</p>
-                      <p className="text-gray-700 mt-1">Seller: {car.firstname} {car.lastname}</p>
-                      <p className="text-gray-700 mt-1">Contact: {car.number}</p>
-                      <p className="text-indigo-600 font-bold mt-2">
-                        ₹ {car.Price} /hr
+
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-4 text-gray-700 text-xs">
+                        {/** Smaller padding in fields for compactness */}
+                        <div className="p-3 border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-default">
+                          <h3 className="font-semibold text-gray-900">Number Plate</h3>
+                          <p className="mt-1">{car.numberPlate}</p>
+                        </div>
+                        <div className="p-3 border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-default">
+                          <h3 className="font-semibold text-gray-900">Fuel Type</h3>
+                          <p className="mt-1">{car.Fuel}</p>
+                        </div>
+                        <div className="p-3 border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-default">
+                          <h3 className="font-semibold text-gray-900">Gear</h3>
+                          <p className="mt-1">{car.Gear}</p>
+                        </div>
+                        <div className="p-3 border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-default">
+                          <h3 className="font-semibold text-gray-900">Seller</h3>
+                          <p className="mt-1">{car.firstname} {car.lastname}</p>
+                        </div>
+                        <div className="col-span-2 p-3 border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-default">
+                          <h3 className="font-semibold text-gray-900">Contact</h3>
+                          <p className="mt-1">{car.number}</p>
+                        </div>
+                      </div>
+
+                      <p className="text-indigo-600 font-extrabold text-xl mt-4 text-right">
+                        ₹ {car.Price} <span className="text-sm font-normal">/hr</span>
                       </p>
 
-                      <div className="mt-6 flex justify-end space-x-3">
+                      <div className="mt-4 flex justify-end space-x-3">
                         <button
                           onClick={() => handlePurchase(car)}
-                          className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+                          className="px-4 py-2 bg-indigo-600 text-white rounded-md shadow hover:bg-indigo-700 transition"
                         >
                           Purchase
                         </button>
                         <button
                           onClick={() => setOpenPopupCarId(null)}
-                          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition"
+                          className="px-4 py-2 bg-gray-200 rounded-md shadow-sm hover:bg-gray-300 transition"
                         >
                           Close
                         </button>
                       </div>
                     </div>
                   </div>
+
                 </div>
               </>
             )}

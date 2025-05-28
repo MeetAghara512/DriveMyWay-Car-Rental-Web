@@ -14,6 +14,7 @@ function Login() {
     setLastName,
     setNumber,
     setEmail,
+    setToken,
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -33,6 +34,8 @@ function Login() {
       const result = await response.json();
 
       if (response.ok) {
+        setToken(result.token); 
+        localStorage.setItem("token", result.token);  
         setFirstName(result.user.firstname);
         setLastName(result.user.lastname);
         setEmail(result.user.email);
@@ -49,7 +52,7 @@ function Login() {
   };
 
   return (
-    <div className="max-w-lg w-full mx-auto mt-20 px-10 py-12 bg-white rounded-3xl shadow-2xl border border-gray-100">
+    <div className="max-w-lg w-full mx-auto mt-20 px-10 py-12 bg-white bg-opacity-80 rounded-3xl shadow-2xl border border-gray-100">
       <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Login to Your Account</h2>
 
       {errorMsg && (

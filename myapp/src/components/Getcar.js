@@ -31,7 +31,7 @@ function GetCar() {
   }, [country.isoCode, state?.isoCode]);
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-blue-100 via-teal-100 to-green-100 grid place-items-center px-4">
+    <section className="flex  justify-center w-full mx-auto mt-20">
       <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
         <h2 className="text-3xl font-extrabold text-teal-900 mb-6 text-center">
           Choose Your Location

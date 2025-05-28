@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { AppContext } from "../Context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate  = useNavigate();
   const {
     firstname, setFirstName,
     lastname, setLastName,
@@ -21,7 +23,6 @@ function Signup() {
       default: break;
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = { firstname, lastname, email, number, password };
@@ -36,6 +37,7 @@ function Signup() {
       const data = await response.json();
       if (response.ok) {
         alert("Signup successful!");
+        navigate ("/login");
       } else {
         alert(`Signup failed: ${data.message}`);
       }
@@ -45,7 +47,7 @@ function Signup() {
   };
 
   return (
-    <div className="max-w-lg w-full mx-auto mt-20 px-10 py-12 bg-white rounded-3xl shadow-2xl border border-gray-100">
+    <div className="max-w-lg w-full mx-auto mt-20 px-10 py-12  bg-white bg-opacity-80 rounded-3xl shadow-2xl border border-gray-100">
       <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Create an Account</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
