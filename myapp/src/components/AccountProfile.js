@@ -8,7 +8,7 @@ const AccountProfile = () => {
   const [providedCars, setProvidedCars] = useState([]);
   const [rentedCars, setRentedCars] = useState([]);
 
-  // Notification state
+ 
   const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
@@ -24,7 +24,7 @@ const AccountProfile = () => {
 
     const fetchProvidedCars = async () => {
       try {
-        const response = await fetch("http://localhost:5000/providedCars", {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/providedCars`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!response.ok) throw new Error("Failed to fetch provided cars");
@@ -37,7 +37,7 @@ const AccountProfile = () => {
 
     const fetchRentedCars = async () => {
       try {
-        const response = await fetch("http://localhost:5000/rentedCars", {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rentedCars`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!response.ok) throw new Error("Failed to fetch rented cars");
@@ -59,7 +59,7 @@ const AccountProfile = () => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/providedCars/${carId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/providedCars/${carId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -82,7 +82,7 @@ const AccountProfile = () => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/returnCar/${car._id}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/returnCar/${car._id}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -111,7 +111,7 @@ const AccountProfile = () => {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No auth token found");
 
-      const response = await fetch("http://localhost:5000/notification", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notification`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) throw new Error("Failed to fetch notifications");

@@ -14,7 +14,7 @@ function RentCarCards() {
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/cars");
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/cars`);
         setCars(response.data);
       } catch (err) {
         setError("Failed to load car data");
@@ -36,7 +36,7 @@ function RentCarCards() {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:5000/purchase", {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/purchase`, {
         carId: car._id,
         buyerEmail: email,
       });

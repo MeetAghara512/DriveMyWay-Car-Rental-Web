@@ -27,10 +27,10 @@ const SmallCarCard = ({ data, cardSize }) => {
   ];
 
   const popupFields = [
-  { label: "Seller Name", value: `${data.firstname || ""} ${data.lastname || ""}`.trim() || "N/A", icon: <User size={20} /> },
-  { label: "Contact Email", value: data.email || "N/A", icon: <Mail size={20} /> },
-  { label: "Contact Number", value: data.number || "N/A", icon: <Phone size={20} /> },
-];
+    { label: "Seller Name", value: `${data.firstname || ""} ${data.lastname || ""}`.trim() || "N/A", icon: <User size={20} /> },
+    { label: "Contact Email", value: data.email || "N/A", icon: <Mail size={20} /> },
+    { label: "Contact Number", value: data.number || "N/A", icon: <Phone size={20} /> },
+  ];
 
   return (
     <>
@@ -101,17 +101,17 @@ const SmallCarCard = ({ data, cardSize }) => {
               loading="lazy"
             />
 
-           <div className="space-y-4">
-  {popupFields.map(({ label, value, icon }) => (
-    <div key={label} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg bg-white shadow-sm">
-      <div className="text-blue-600">{icon}</div>
-      <div className="flex flex-col w-full">
-        <span className="text-sm text-gray-500 font-medium">{label}</span>
-        <span className="text-gray-900 font-semibold break-words">{value}</span>
-      </div>
-    </div>
-  ))}
-</div>
+            <div className="space-y-4">
+              {popupFields.map(({ label, value, icon }) => (
+                <div key={label} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg bg-white shadow-sm">
+                  <div className="text-blue-600">{icon}</div>
+                  <div className="flex flex-col w-full">
+                    <span className="text-sm text-gray-500 font-medium">{label}</span>
+                    <span className="text-gray-900 font-semibold break-words">{value}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
 
           </div>
         </div>

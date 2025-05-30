@@ -74,7 +74,7 @@ function SellCarUserInput() {
     const dataToSend = { ...form, img: imageUrl };
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:5000/uploads", dataToSend);
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/uploads`, dataToSend);
       console.log("Response status:", res.status);
       console.log("Response data:", res.data);
 
