@@ -8,7 +8,7 @@ const AccountProfile = () => {
   const [providedCars, setProvidedCars] = useState([]);
   const [rentedCars, setRentedCars] = useState([]);
 
- 
+
   const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
@@ -119,7 +119,7 @@ const AccountProfile = () => {
 
       // Filter notifications related to current user by owner email (adjust if you have ownerId)
       data = data.filter(notif => notif.ownerEmail === email);
-      console.log("notification:", data);
+      
       setNotifications(data);
       setShowNotifications(true);
     } catch (error) {
@@ -133,7 +133,7 @@ const AccountProfile = () => {
   return (
     <div className="px-6 py-8 max-w-7xl mx-auto relative">
       {/* Notification Icon */}
-      <div
+      {/* <div
         className="fixed top-30 right-6 cursor-pointer z-50"
         onClick={handleToggleNotifications}
         aria-label="Toggle notifications"
@@ -152,7 +152,7 @@ const AccountProfile = () => {
             d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
           />
         </svg>
-      </div>
+      </div> */}
 
       {/* Notification Popup */}
       {showNotifications && (
@@ -204,34 +204,66 @@ const AccountProfile = () => {
       )}
 
       {/* Account Details */}
-      <section className="mb-16 p-10   rounded-3xl shadow-2xl border border-white/40 bg-white max-w-3xl mx-auto transition-transform duration-300 hover:scale-[1.01] bg-opacity-80">
-        <h2 className="text-4xl font-bold text-gray-900 mb-8 tracking-tight">✨ Account Details</h2>
-        <div className="space-y-6 text-gray-800 text-lg">
+      <section className="mb-16 p-10  rounded-3xl shadow-2xl border border-white/40 bg-white max-w-3xl mx-auto transition-transform duration-300 hover:scale-[1.01] bg-opacity-80 overflow-auto">
+        <div className="flex flex-row justify-between">
+          <h2 className="md:text-4xl font-bold text-gray-900 mb-8 tracking-tight text-left sm:text-2xl text-xl">✨ Account Details</h2>
+          <div
+            className=" cursor-pointer z-50 mt-0"
+            onClick={handleToggleNotifications}
+            aria-label="Toggle notifications"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-8 w-8 text-gray-700 hover:text-indigo-600 transition"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              />
+            </svg>
+          </div>
+
+        </div>
+        <div className="space-y-6 text-gray-800 md:text-xl sm:text-lg text-md">
           <div className="flex items-center space-x-4">
-            <User className="text-purple-600 w-6 h-6" />
+            <div className="w-6 h-6 flex items-center justify-center shrink-0">
+              <User className="text-purple-600 w-6 h-6" />
+            </div>
             <span className="font-medium w-32">Name:</span>
             <span className="font-semibold">{firstname} {lastname}</span>
           </div>
+
           <div className="flex items-center space-x-4">
-            <Mail className="text-blue-600 w-6 h-6" />
+            <div className="w-6 h-6 flex items-center justify-center shrink-0">
+              <Mail className="text-blue-600 w-6 h-6" />
+            </div>
             <span className="font-medium w-32">Email:</span>
             <span className="font-semibold">{email}</span>
           </div>
+
           <div className="flex items-center space-x-4">
-            <Phone className="text-green-600 w-6 h-6" />
+            <div className="w-6 h-6 flex items-center justify-center shrink-0">
+              <Phone className="text-green-600 w-6 h-6" />
+            </div>
             <span className="font-medium w-32">Phone:</span>
             <span className="font-semibold">{number || "N/A"}</span>
           </div>
         </div>
+
       </section>
 
       {/* Provided Cars */}
-      <section className="mb-20 bg-white bg-opacity-80 from-gray-50 via-white to-gray-50 rounded-2xl p-8 shadow-lg">
-        <h2 className="text-3xl font-extrabold text-gray-900 mb-8 tracking-wide text-center md:text-left">
+      <section className="mb-20 bg-white bg-opacity-80 from-gray-50 via-white to-gray-50 rounded-2xl p-8 shadow-lg ">
+        <h2 className="font-extrabold text-gray-900 mb-8 tracking-wide text-center md:text-left md:text-3xl sm:text-2xl text-xl">
           Provided Cars
         </h2>
         {providedCars.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 [@media(min-width:900px)]:grid-cols-3 gap-8 overflow-auto">
             {providedCars.map((car) => (
               <div
                 key={car._id}
@@ -258,7 +290,7 @@ const AccountProfile = () => {
           Rented Cars
         </h2>
         {rentedCars.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 [@media(min-width:900px)]:grid-cols-3 gap-8 overflow-auto">
             {rentedCars.map((car) => (
               <div
                 key={car._id}

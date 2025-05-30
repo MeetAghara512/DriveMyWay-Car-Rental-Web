@@ -162,7 +162,6 @@ app.get("/cars", async (req, res) => {
   }
 });
 
-
 const getCarPurchaseEmail = ({ accountName, carName, purchaseDate, appUrl }) => `
   <div style="max-width:600px;margin:0 auto;padding:40px;background-color:#f4f4f4;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
     <div style="background:#ffffff;border-radius:10px;padding:30px 40px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
@@ -175,7 +174,7 @@ const getCarPurchaseEmail = ({ accountName, carName, purchaseDate, appUrl }) => 
         You can view your purchase here:
       </p>
       <div style="text-align:center;margin:30px 0;">
-        <a href="${appUrl}" style="display:inline-block;padding:12px 24px;background-color:#007bff;color:#ffffff;text-decoration:none;border-radius:5px;font-size:16px;">
+        <a href="https://drivemyway-web.onrender.com/" style="display:inline-block;padding:12px 24px;background-color:#007bff;color:#ffffff;text-decoration:none;border-radius:5px;font-size:16px;">
           Visit Your App
         </a>
       </div>

@@ -187,11 +187,11 @@ function About() {
             Our Trusted Brands
           </h2>
 
-          <div className="flex flex-wrap justify-center gap-10">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             {brands.map((brand) => (
               <div
                 key={brand.name}
-                className="flex flex-col items-center space-y-3 w-28"
+                className="flex flex-col items-center space-y-3 w-28 "
               >
                 <img
                   src={brand.logo}
@@ -199,9 +199,9 @@ function About() {
                   className="w-20 h-20 object-contain transition-transform duration-300 ease-in-out hover:scale-110"
                   loading="lazy"
                 />
-                <span className="text-gray-800 font-medium select-none text-lg">
+                {/* <span className="text-gray-800 font-medium select-none text-lg">
                   {brand.name}
-                </span>
+                </span> */}
               </div>
             ))}
           </div>

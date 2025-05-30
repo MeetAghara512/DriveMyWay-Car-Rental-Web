@@ -3,7 +3,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   background: #1b2430;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
   position: relative;
   z-index: 10000;
@@ -48,8 +48,8 @@ nav {
 
 #mobile {
   display: none;
-  position: fixed;
-  top: 20px;
+  position: relative;
+  top: 5  px;
   right: 20px;
   z-index: 11000; /* above navbar and overlay */
   cursor: pointer;

@@ -22,7 +22,7 @@ class Navbar extends Component {
     return (
       <>
         <nav>
-          <a href='/'>
+          {/* <a href='/home'>
             <svg
               id="logo-14"
               width="73"
@@ -47,44 +47,62 @@ class Navbar extends Component {
                 fill="#5D2C02"
               ></path>
             </svg>
-          </a>
+          </a> */}
+      <a href="/home">
+  <img
+    src="/secondLogo.jpg" // Make sure it's placed in the `public` folder
+    alt="Logo"
+    style={{ objectFit: 'contain',
+
+       borderRadius: '50%',
+    width: '69px',
+    height: '69px',
+     }}
+  />
+</a>
 
           <div>
             <ul id="navbar" className={this.state.clicked ? "active" : ""}>
               <li>
-                <NavLink to='/Home' className={({ isActive }) => (isActive ? 'active' : '')}>
+                <NavLink to='/Home' className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => this.setState({ clicked: false })}
+                >
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to='/About' className={({ isActive }) => (isActive ? 'active' : '')}>
+                <NavLink to='/About' className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => this.setState({ clicked: false })}
+                >
                   About
                 </NavLink>
               </li>
               {flagLogin && (
                 <li>
-                  <NavLink to='/Login' className={({ isActive }) => (isActive ? 'active' : '')}>
+                  <NavLink to='/Login' className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => this.setState({ clicked: false })}
+                  >
                     Login
                   </NavLink>
                 </li>
               )}
               {!flagLogin && (
                 <li>
-                  <NavLink to='/Logout' className={({ isActive }) => (isActive ? 'active' : '')}>
+                  <NavLink to='/Logout' className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => this.setState({ clicked: false })}
+                  >
                     Logout
                   </NavLink>
                 </li>
               )}
               {flagSignUp && (
                 <li>
-                  <NavLink to='/Signup' className={({ isActive }) => (isActive ? 'active' : '')}>
+                  <NavLink to='/Signup' className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => this.setState({ clicked: false })}
+                  >
                     SignUp
                   </NavLink>
                 </li>
               )}
               {!flagSignUp && (
                 <li>
-                  <NavLink to='/AccountProfile' className={({ isActive }) => (isActive ? 'active' : '')}>
+                  <NavLink to='/AccountProfile' className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => this.setState({ clicked: false })}
+                  >
                     <FaUserCircle className="inline mr-1 mb-1" /> {firstname}
                   </NavLink>
                 </li>

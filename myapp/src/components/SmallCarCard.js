@@ -34,7 +34,7 @@ const SmallCarCard = ({ data, cardSize }) => {
 
   return (
     <>
-      <div className={`${baseCardClasses} ${appliedSizeClass} mx-auto`}>
+      <div className={`${baseCardClasses}  mx-auto w-[90%] p-3 `}>
         <img
           src={data.img || "https://via.placeholder.com/150"}
           alt={`${data.brand || "Car"} ${data.model || ""}`}
