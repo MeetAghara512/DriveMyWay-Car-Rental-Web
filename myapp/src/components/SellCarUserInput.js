@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-const cloudName = import.meta.env.VITE_CLOUD_NAME;
-const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
 
-const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
 
 function SellCarUserInput() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -30,17 +28,21 @@ function SellCarUserInput() {
     setLoading(true);
 
     const data = new FormData();
+
+    const cloudName = process.env.REACT_APP_CLOUD_NAME;
+    const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
     data.append("file", file);
-    data.append("upload_preset",uploadPreset); // your Cloudinary upload preset
+    data.append("upload_preset", uploadPreset); // your Cloudinary upload preset
 
     try {
-      const res = await fetch(url,
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
         {
           method: "POST",
           body: data,
         }
       );
       const uploadData = await res.json();
+
       if (uploadData.secure_url) {
         setImageUrl(uploadData.secure_url);
       } else {
@@ -243,11 +245,10 @@ function SellCarUserInput() {
           <button
             type="submit"
             disabled={loading || !imageUrl}
-            className={`w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-xl ${
-              loading || !imageUrl
+            className={`w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-xl ${loading || !imageUrl
                 ? "opacity-50 cursor-not-allowed"
                 : ""
-            }`}
+              }`}
           >
             Submit Car Details
           </button>
