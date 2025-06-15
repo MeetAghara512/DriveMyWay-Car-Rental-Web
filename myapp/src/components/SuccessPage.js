@@ -39,7 +39,7 @@ const SuccessPage = () => {
   }, [carId, buyerEmail]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-white to-blue-100 px-4 py-10">
+    <div className="fixed inset-0 flex items-center justify-center px-4">
       <div className="bg-white shadow-xl rounded-xl max-w-lg w-full p-8 text-center border border-gray-200">
         <div className="text-green-500">
           <svg
@@ -65,7 +65,7 @@ const SuccessPage = () => {
         </p>
 
         <NavLink
-          to="/"
+          to={`${window.location.origin}/`}
           className="mt-6 inline-block bg-blue-600 text-white font-medium px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition-all duration-300"
         >
           Go to Home
