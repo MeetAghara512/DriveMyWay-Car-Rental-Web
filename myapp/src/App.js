@@ -12,9 +12,34 @@ import AccountProfile from "./components/AccountProfile";
 import SellCarUserInput from "./components/SellCarUserInput";
 import Logout from "./components/Logout";
 import About from "./components/About";
+import SuccessPage from "./components/SuccessPage";
+import { useEffect, useContext } from "react";
+import { AppContext } from "./Context/AppContext";
 
 
 function App() {
+  const {
+      setFlagLogin,
+      setFlagSignUp,
+      setFirstName,
+      setLastName,
+      setNumber,
+      setEmail,
+    } = useContext(AppContext);
+  useEffect(()=>{
+    const FN=localStorage.getItem("firstName");
+    const LN=localStorage.getItem("lastName");
+    const EM=localStorage.getItem("Email");
+    const NU=localStorage.getItem("Number");
+    if(EM!== null){
+      setFlagLogin(false);
+      setFlagSignUp(false);
+      setFirstName(FN||"");
+      setLastName(LN||"");
+      setEmail(EM||"");
+      setNumber(NU||"");
+    }
+  },[]);
   return (
     <div className="App min-h-screen w-screen bg-cover bg-center bg-no-repeat overflow-x-hidden" >
       <Navbar></Navbar>
@@ -27,6 +52,7 @@ function App() {
         <Route path="/sellcar" element={<SellCarUserInput />}></Route>
         <Route path="/Logout" element={<Logout />}></Route>
         <Route path="/About" element={<About />}></Route>
+        <Route path="/success" element={<SuccessPage />} />
         <Route
           path="/RentCarCards"
           element={<RentCarCards/>}

@@ -9,6 +9,8 @@ import authenticateToken from "./middleware/auth.js";
 import dotenv from "dotenv";
 dotenv.config();
 import  sendMail from "./utils/sendMail.js"; 
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 const app = express();
@@ -44,6 +46,44 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+
+
+
+app.post("/create-checkout-session", async (req, res) => {
+  const { carId, buyerEmail } = req.body;
+
+  const carToRent = await SellCar.findById(carId);
+  if (!carToRent) {
+    return res.status(404).json({ message: "Car not found" });
+  }
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      customer_email: buyerEmail,
+      line_items: [
+        {
+          price_data: {
+            currency: "inr",
+            product_data: {
+              name: carToRent.model,
+            },
+            unit_amount: carToRent.Price*100, // must be in paise
+          },
+          quantity: 1,
+        },
+      ],
+      success_url: `${process.env.CLIENT_URL}/success?carId=${carId}`,
+      cancel_url: `${process.env.CLIENT_URL}/cancel`,
+    });
+
+    res.json({ id: session.id }); // ✅ this is what Stripe expects
+  } catch (error) {
+    console.error("Stripe Error:", error);
+    res.status(500).json({ message: "Failed to create Stripe session" });
+  }
+});
 
 
 // app.post("/login", async (req, res) => {

@@ -2,6 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AppContext } from "../Context/AppContext";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 function RentCarCards() {
   const [cars, setCars] = useState([]);
@@ -25,31 +28,38 @@ function RentCarCards() {
     fetchCars();
   }, []);
 
-  const handleCarPurchased = (purchasedCarId) => {
-    setCars((prev) => prev.filter((car) => car._id !== purchasedCarId));
-    setOpenPopupCarId(null);
-  };
+  // const handleCarPurchased = (purchasedCarId) => {
+  //   setCars((prev) => prev.filter((car) => car._id !== purchasedCarId));
+  //   setOpenPopupCarId(null);
+  // };
 
-  const handlePurchase = async (car) => {
-    if (!email) {
-      toast.error("You must be logged in to purchase a car.");
-      return;
-    }
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/purchase`, {
+ const handlePurchase = async (car) => {
+  if (!email) {
+    toast.error("You must be logged in to purchase a car.");
+    return;
+  }
+
+  const stripe = await stripePromise;
+  try {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/create-checkout-session`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
         carId: car._id,
         buyerEmail: email,
-      });
+      }),
+    });
 
-      if (response.status === 200) {
-        toast.success("Car purchased successfully!");
-        handleCarPurchased(car._id);
-      }
-    } catch (error) {
-      toast.error("Purchase failed. Please try again.");
-      console.error(error);
-    }
-  };
+    const session = await response.json();
+    if (!session.id) throw new Error("Invalid session");
+
+    await stripe.redirectToCheckout({ sessionId: session.id });
+    
+    // ❌ DO NOT CALL purchase API HERE, it will never run
+  } catch (error) {
+    alert("Checkout failed: " + error.message);
+  }
+};
 
   if (loading)
     return (
