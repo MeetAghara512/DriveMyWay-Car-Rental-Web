@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const SuccessPage = () => {
   const query = new URLSearchParams(useLocation().search);
   const carId = query.get("carId");
-  const buyerEmail = localStorage.getItem("Email");
+  const buyerEmail = sessionStorage.getItem("Email");
 
   const [hasConfirmed, setHasConfirmed] = useState(false);
   const hasRun = useRef(false);
