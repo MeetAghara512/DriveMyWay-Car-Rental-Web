@@ -37,13 +37,13 @@ function Login() {
         setToken(result.token); 
         localStorage.setItem("token", result.token);
         setFirstName(result.user.firstname);
-        localStorage.setItem("firstName", result.user.firstname);
+        sessionStorage.setItem("firstName", result.user.firstname);
         setLastName(result.user.lastname);
-        localStorage.setItem("lastName", result.user.lastname);
+        sessionStorage.setItem("lastName", result.user.lastname);
         setEmail(result.user.email);
-        localStorage.setItem("Email", result.user.email);
+        sessionStorage.setItem("Email", result.user.email);
         setNumber(result.user.number);
-        localStorage.setItem("Number", result.user.number);
+        sessionStorage.setItem("Number", result.user.number);
         setFlagLogin(false);
         setFlagSignUp(false);
         navigate("/");

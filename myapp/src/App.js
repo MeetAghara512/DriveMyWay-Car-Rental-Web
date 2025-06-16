@@ -27,10 +27,10 @@ function App() {
       setEmail,
     } = useContext(AppContext);
   useEffect(()=>{
-    const FN=localStorage.getItem("firstName");
-    const LN=localStorage.getItem("lastName");
-    const EM=localStorage.getItem("Email");
-    const NU=localStorage.getItem("Number");
+    const FN=sessionStorage.getItem("firstName");
+    const LN=sessionStorage.getItem("lastName");
+    const EM=sessionStorage.getItem("Email");
+    const NU=sessionStorage.getItem("Number");
     if(EM!== null){
       setFlagLogin(false);
       setFlagSignUp(false);
