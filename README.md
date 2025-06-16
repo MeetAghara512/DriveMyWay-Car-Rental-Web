@@ -6,6 +6,7 @@ Tired of complicated booking systems and unreliable rental services? **DriveMyWa
 ## Live Website  🔗 [DriveMyWay - Live Website](https://drivemyway-web.onrender.com)
 
 ---
+
 ## 🔥 Key Features – Why Choose DriveMyWay?
 
 🚘 **Browse & Book Cars Easily**  
@@ -30,8 +31,16 @@ Car images and assets are stored in Cloudinary for optimized loading and deliver
 Leave and read reviews to help others choose the best ride.
 
 📊 **Admin Dashboard Analytics**  
-Admins can view platform statistics like bookings,  and user activity.
+Admins can view platform statistics like bookings and user activity.
 
+💳 **Stripe Sandbox Payment Integration**  
+Test payments are handled using **Stripe’s sandbox** environment.  
+Use the following **dummy card** for testing:
+```
+Card Number: 4242 4242 4242 4242
+Expiry: Any future date
+CVC: Any 3 digits 
+```
 ---
 
 ## 🧠 How DriveMyWay Works – Under the Hood
@@ -51,7 +60,7 @@ Admins can view platform statistics like bookings,  and user activity.
 1. 📲 **Register/Login**: Create your account as a customer or owner.
 2. 🚘 **Browse Cars**: Filter by location, price, or car type.
 3. 📆 **Pick Dates**: Select pickup and return dates.
-4. 💳 **Make Payment**: Pay securely through integrated gateways. (Remaining)
+4. 💳 **Make Payment**: Pay securely through Stripe Sandbox integration.  
 5. 📩 **Get Notified**: Renter receives an email + Owner sees booking notification on dashboard.
 
 ---
@@ -84,6 +93,9 @@ Admins can view platform statistics like bookings,  and user activity.
 
 ### 📝 Rent a Car Form
 ![Rent Form](./Picture/renting_form.png)
+
+### 📝 Stripe Payment 
+![Conformation Mail](./Picture/payment.png)
 
 ### 📝 Mail 
 ![Conformation Mail](./Picture/maill.png)
