@@ -8,6 +8,10 @@ export default function Logout() {
 
   const handleLogout = () => {
     resetState();
+    sessionStorage.removeItem('Email');
+    sessionStorage.removeItem('firstName');
+    sessionStorage.removeItem('lastName');
+    sessionStorage.removeItem('Number');
     navigate('/login'); 
   };
 
