@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-
-
 function SellCarUserInput() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");

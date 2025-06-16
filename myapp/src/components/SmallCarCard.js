@@ -12,14 +12,6 @@ const SmallCarCard = ({ data, cardSize }) => {
   const baseCardClasses =
     "border border-gray-300 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 bg-white cursor-pointer flex flex-col";
 
-  // const sizeClasses = {
-  //   small: "max-w-md p-4",
-  //   medium: "max-w-lg p-6",
-  //   large: "w-80 p-7",
-  // };
-
-  // const appliedSizeClass = sizeClasses[cardSize] || sizeClasses.medium;
-
   const outsideFields = [
     { label: "Price", value: `₹${data.Price || "N/A"}` },
     { label: "Fuel Type", value: data.Fuel || "N/A" },
